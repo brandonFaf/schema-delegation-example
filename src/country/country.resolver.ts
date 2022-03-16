@@ -36,6 +36,8 @@ export class CountryResolver {
     });
 
     console.log('result:', result[0]);
+    //want to do some mapping here with country.code even if the user didn't request it.
+    // for example. maybe expose a field called codeStartsWithA. and i want the user to be able to query it without having to query code as well.
     return result;
   }
 }
