@@ -6,7 +6,7 @@ export class AddFieldToDelegatedRequest implements Transform {
   schema;
   fieldName;
   typeName;
-  constructor(schema, fieldName, typeName) {
+  constructor(schema, typeName, fieldName) {
     this.schema = schema;
     this.fieldName = fieldName;
     this.typeName = typeName;
@@ -39,5 +39,12 @@ export class AddFieldToDelegatedRequest implements Transform {
       }),
     );
     return { ...originalRequest, document: doc };
+  }
+  transformResult(originalResult) {
+    console.log(
+      'originalResult',
+      JSON.stringify(originalResult.data.countries[0], null, 2),
+    );
+    return originalResult;
   }
 }

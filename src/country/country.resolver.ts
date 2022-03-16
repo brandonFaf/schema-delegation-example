@@ -35,7 +35,7 @@ export class CountryResolver {
       info,
     });
 
-    console.log('result:', result);
+    console.log('result:', result[0]);
     return result;
   }
 }
