@@ -9,5 +9,5 @@ export class Country {
   name: string;
 
   @Field()
-  native?: string;
+  startsWithA?: boolean;
 }
