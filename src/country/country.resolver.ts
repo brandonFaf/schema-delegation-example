@@ -5,7 +5,8 @@ import fetch from 'cross-fetch';
 import { GraphQLResolveInfo, OperationTypeNode, print } from 'graphql';
 import { introspectSchema, wrapSchema } from '@graphql-tools/wrap';
 import { AsyncExecutor } from '@graphql-tools/utils';
-import { AddFieldToDelegatedRequest } from './transform';
+import { AddFieldToDelegatedRequest } from './transforms/transform';
+import { CountryConfig } from './transforms/custumFieldMapping.config';
 @Resolver(() => Country)
 export class CountryResolver {
   @Query(() => [Country])
@@ -36,12 +37,17 @@ export class CountryResolver {
       args: {},
       context,
       info,
-      transforms: [new AddFieldToDelegatedRequest(schema, 'Country', 'code')],
+      transforms: [
+        new AddFieldToDelegatedRequest(schema, 'Country', CountryConfig),
+      ],
     });
 
     console.log('result:', result);
-    (result[0] as Country).startsWithA = (result[0].code as string).startsWith(
+    (result[0] as Country).startsWithA = (result[0].code as string)?.startsWith(
       'A',
+    );
+    (result[0] as Country).primaryState = (result[0] as Country).states.find(
+      (s) => s.isPrimaryState,
     );
     return result;
   }
